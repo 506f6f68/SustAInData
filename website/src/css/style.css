@@ -50,7 +50,7 @@ body {
 }
 
 .heading_container h2 span {
-  color: #00bbf0;
+  color: #529d46;
 }
 
 .heading_container p {
@@ -132,6 +132,7 @@ a:focus {
 
 .header_section {
   padding: 15px 0;
+  background-color: rgba(255, 255, 255, 0.5); /* Update this line */
 }
 
 .header_section .container-fluid {
@@ -142,7 +143,7 @@ a:focus {
 .navbar-brand span {
   font-weight: bold;
   font-size: 24px;
-  color: #ffffff;
+  color: #13783d;
 }
 
 .custom_nav-container {
@@ -155,7 +156,7 @@ a:focus {
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
   padding: 5px 20px;
-  color: #ffffff;
+  color: #000000;
   text-align: center;
   text-transform: uppercase;
   border-radius: 5px;
@@ -273,7 +274,7 @@ a:focus {
 }
 
 .slider_section .detail-box h1 {
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 15px;
@@ -282,7 +283,7 @@ a:focus {
 
 .slider_section .detail-box p {
   color: #fefefe;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .slider_section .detail-box .btn-box {
@@ -479,12 +480,22 @@ a:focus {
 }
 
 .about_section {
-  background-color: #00204a;
+  background-color: #c7f2bc;
   color: #ffffff;
 }
 
 .about_section .heading_container {
   margin-bottom: 45px;
+}
+
+.about_section .heading_container h2{
+  font-size: 40px;
+  color:#000000;
+}
+
+.about_section .heading_container p{
+  font-size: 22px;
+  color: #000000;
 }
 
 .about_section .row {
@@ -499,10 +510,14 @@ a:focus {
 
 .about_section .detail-box h3 {
   font-weight: bold;
+  font-size: 30px;
+  color: #000000;
 }
 
 .about_section .detail-box p {
   margin-top: 15px;
+  font-size: 20px;
+  color: #000000;
 }
 
 .about_section .detail-box a {
@@ -598,7 +613,7 @@ a:focus {
 /*team section */
 .team_section {
   text-align: center;
-  background-color: #00204a;
+  background-color: #c7f2bc;
   color: #ffffff;
 }
 
@@ -620,7 +635,7 @@ a:focus {
   transition: all .1s;
   margin-top: 45px;
   background: -webkit-gradient(linear, left top, left bottom, from(#002759), to(#002b64));
-  background: linear-gradient(to bottom, #002759, #002b64);
+  background: linear-gradient(to bottom, #99d1b5, #bee4b4);
 }
 
 .team_section .team_container .box .img-box {
@@ -646,7 +661,7 @@ a:focus {
 }
 
 .team_section .team_container .box .detail-box h5 {
-  color: #00bbf0;
+  color: #357283;
   font-weight: 600;
   position: relative;
 }
@@ -915,7 +930,7 @@ a:focus {
 }
 
 .footer_section p {
-  color: #00204a;
+  color: #42620afb;
   padding: 25px 0;
   margin: 0;
 }
@@ -934,4 +949,78 @@ a:focus {
 .chatbot_section h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #00204a;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #00bbf0;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #007fa4;
+}
+
+#chat-output {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin: 10px 0;
+}
+
+.message.user {
+    text-align: right;
+}
+
+.message.bot {
+    text-align: left;
+}
+
+.navbar-brand-text {
+    color: #000000; /* Make the text black */
 }
