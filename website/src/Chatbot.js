@@ -61,6 +61,7 @@ const ChatbotPage = () => {
   };
 
   const handleGenerateSummary = async () => {
+    setLoading(true); // Set loading state to true
     try {
       // Fetch the summary from the /summary endpoint
       const summaryResponse = await fetch('http://127.0.0.1:5000/summary', {
@@ -84,6 +85,8 @@ const ChatbotPage = () => {
     } catch (error) {
       console.error("Error generating summary or fetching dashboard data:", error);
       setSummary("Error generating summary. Please try again.");
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -224,6 +227,9 @@ const ChatbotPage = () => {
                     <p>{summary}</p>
                   </Card>
                 )}
+                {showDashboard && dashboardData.map((plan, index) => (
+                  <Dashboards key={index} {...plan} />
+                ))} {/* Render multiple dashboards */}
               </div>
             </>
           )}
