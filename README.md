@@ -10,5 +10,5 @@ As digital demand accelerates, data centers face the critical challenge of scali
 
 
 ## install
-pip install -r requirements.txt
+pip install -r requirements.txt  
 install ollama to the local machine
