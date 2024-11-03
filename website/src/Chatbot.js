@@ -1,7 +1,7 @@
 // ChatbotPage.js
 import React, { useState } from 'react';
 import { Layout, Input, Button, List, Typography, Card, Avatar, Spin, Form, Select, InputNumber } from 'antd';
-import { UserOutlined} from '@ant-design/icons';
+import { UserOutlined, RobotOutlined, LoadingOutlined } from '@ant-design/icons';
 import ReactMarkdown from 'react-markdown';
 import './css/bootstrap.css';
 import './css/style.css';
@@ -20,6 +20,8 @@ const ChatbotPage = () => {
   const [initialQuestionsAnswered, setInitialQuestionsAnswered] = useState(false);
   const [initialFormData, setInitialFormData] = useState({});
   const [summary, setSummary] = useState(''); // Initialize summary state as an empty string
+  const [showDashboard, setShowDashboard] = useState(false); // Add state to control dashboard visibility
+  const [dashboardData, setDashboardData] = useState([]); // Add state to store dashboard data
 
   const handleInitialSubmit = (values) => {
     console.log('Received values:', values);
@@ -73,8 +75,14 @@ const ChatbotPage = () => {
 
       // Update summary state
       setSummary(summaryData.summary);
+
+      // Parse the dashboard response
+
+      // Update dashboard data state
+      setDashboardData(summaryData.plans); // Assuming the API returns an object with a 'plans' array
+      setShowDashboard(true); // Show the dashboard after generating summary
     } catch (error) {
-      console.error("Error generating summary:", error);
+      console.error("Error generating summary or fetching dashboard data:", error);
       setSummary("Error generating summary. Please try again.");
     }
   };
@@ -82,6 +90,30 @@ const ChatbotPage = () => {
   const windTurbineIcon = (
     <img src="images/fan.png" alt="Loading" style={{ width: 25, height: 25 }} className="spin" />
   );
+
+  //Sample data for the dashboard
+  //const dashboardData = {
+  //  planTitle: "Plan A",
+  //  locationDetails: "Los Angeles, CA",
+  //  coolingTech: {
+  //    building: { techName: "HVAC", supplier: "Supplier Name" },
+  //    server: { techName: "Submerging servers in nonconductive liquid", supplier: "Supplier Name" }
+  //  },
+  //  energyDetails: {
+  //    type: "Solar/Mixed",
+  //    supplier: "PV Solar California",
+  //    renewablePercentage: 70
+  //  },
+  //  operationalCost: {
+  //    total: 10000,
+  //    utility: 5000,
+  //    rent: 2000,
+  //    staff: 3000
+  //  },
+  //  emissions: 120,
+  //  waterUsage: 500000,
+  //  regulations: "Regulations to be aware/consider"
+  //};
 
   return (
     <div className="chatbot_page">
@@ -190,10 +222,15 @@ const ChatbotPage = () => {
                   </Card>
                 )}
               </div>
+              {showDashboard && dashboardData.map((plan, index) => (
+                <Dashboards key={index} {...plan} />
+              ))} {/* Render multiple dashboards */}
             </>
           )}
         </div>
       </Content>
+      
+      
     </div>
   );
 };
