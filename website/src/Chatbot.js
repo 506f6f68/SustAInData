@@ -1,18 +1,31 @@
 // ChatbotPage.js
 import React, { useState } from 'react';
-import { Layout, Input, Button, List, Typography, Card, Avatar } from 'antd';
-import { UserOutlined, RobotOutlined } from '@ant-design/icons';
+import { Layout, Input, Button, List, Typography, Card, Avatar, Spin, Form, Select, InputNumber } from 'antd';
+import { UserOutlined, RobotOutlined, LoadingOutlined } from '@ant-design/icons';
+import ReactMarkdown from 'react-markdown';
 import './css/bootstrap.css';
 import './css/style.css';
 import './css/responsive.css';
+//import Dashboards from './Dashboards'; // Import the Dashboards component
 
 const { Header, Content } = Layout;
 const { TextArea } = Input;
 const { Title } = Typography;
+const { Option } = Select;
 
 const ChatbotPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [initialQuestionsAnswered, setInitialQuestionsAnswered] = useState(false);
+  const [initialFormData, setInitialFormData] = useState({});
+  const [summary, setSummary] = useState(''); // Initialize summary state as an empty string
+
+  const handleInitialSubmit = (values) => {
+    console.log('Received values:', values);
+    setInitialFormData(values);
+    setInitialQuestionsAnswered(true);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,24 +33,55 @@ const ChatbotPage = () => {
 
     const userMessage = { sender: 'user', text: input };
     setMessages([...messages, userMessage]);
+    setInput(''); // Clear the text box immediately
 
-    const response = await fetch('/process_text/', {
+    setLoading(true); // Show loading indicator
+
+    // Combine form data with input text
+    const requestData = {
+      ...initialFormData,
+      text: input,
+    };
+
+    // Send the combined data to the API endpoint
+    const response = await fetch('http://127.0.0.1:5000/process_text/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: input }),
+      body: JSON.stringify(requestData),
     });
 
     const data = await response.json();
     const botMessage = { sender: 'bot', text: data.answer };
     setMessages([...messages, userMessage, botMessage]);
-    setInput('');
+    setLoading(false); // Hide loading indicator
+  };
+
+  const handleGenerateSummary = async () => {
+    try {
+      // Fetch the summary from the /summary endpoint
+      const summaryResponse = await fetch('http://127.0.0.1:5000/summary', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Parse the response
+      const summaryData = await summaryResponse.json();
+
+      // Update summary state
+      setSummary(summaryData.summary);
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      setSummary("Error generating summary. Please try again.");
+    }
   };
 
   return (
-    <Layout className="chatbot_page">
-      <Header className="header_section">
+    <div className="chatbot_page">
+      <header className="header_section">
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg custom_nav-container">
             <a className="navbar-brand" href="/">
@@ -58,39 +102,93 @@ const ChatbotPage = () => {
             </div>
           </nav>
         </div>
-      </Header>
+      </header>
 
       <Content className="chatbot_section">
         <div className="container">
           <Title level={2} style={{ textAlign: 'center' }}>Chat with our Data Center Consultant</Title>
-          <div id="chat-container" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-            <List
-              dataSource={messages}
-              renderItem={(msg, index) => (
-                <List.Item key={index} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
-                  {msg.sender === 'bot' && <Avatar icon={<RobotOutlined />} style={{ marginRight: '10px' }} />}
-                  <Card style={{ width: '100%', backgroundColor: msg.sender === 'user' ? '#e6f7ff' : '#f6ffed' }}>
-                    <Typography.Text>{msg.text}</Typography.Text>
+          {!initialQuestionsAnswered ? (
+            <Form
+              layout="vertical"
+              onFinish={handleInitialSubmit}
+              style={{ maxWidth: '600px', margin: '0 auto' }}
+            >
+              <Form.Item
+                name="tier"
+                label="Choose Tier"
+                rules={[{ required: true, message: 'Please select a tier!' }]}
+              >
+                <Select placeholder="Select a tier">
+                  <Option value="1">Tier 1</Option>
+                  <Option value="2">Tier 2</Option>
+                  <Option value="3">Tier 3</Option>
+                  <Option value="4">Tier 4</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="servers"
+                label="Number of Servers"
+                rules={[{ required: true, message: 'Please input the number of servers!' }]}
+              >
+                <InputNumber min={1} placeholder="Enter number of servers" style={{ width: '100%' }} />
+              </Form.Item>
+              <Form.Item
+                name="budget"
+                label="Operational Budget"
+                rules={[{ required: true, message: 'Please input your operational budget!' }]}
+              >
+                <InputNumber min={0} placeholder="Enter operational budget" style={{ width: '100%' }} />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">Submit</Button>
+              </Form.Item>
+            </Form>
+          ) : (
+            <>
+              <div id="chat-container" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+                <List
+                  dataSource={messages}
+                  renderItem={(msg, index) => (
+                    <List.Item key={index} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
+                      {msg.sender === 'bot' && <Avatar icon={<RobotOutlined />} style={{ marginRight: '10px' }} />}
+                      <Card style={{ width: '100%', backgroundColor: msg.sender === 'user' ? '#e6f7ff' : '#f6ffed' }}>
+                        <Typography.Text>
+                          <ReactMarkdown>{msg.text}</ReactMarkdown>
+                        </Typography.Text>
+                      </Card>
+                      {msg.sender === 'user' && <Avatar icon={<UserOutlined />} style={{ marginLeft: '10px' }} />}
+                    </List.Item>
+                  )}
+                />
+                {loading && (
+                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                  </div>
+                )}
+                <form id="chat-form" onSubmit={handleSubmit} style={{ display: 'flex', marginTop: '20px' }}>
+                  <TextArea
+                    rows={2}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your message here..."
+                    required
+                    style={{ flex: 1, marginRight: '10px' }}
+                  />
+                  <Button type="primary" htmlType="submit">Send</Button>
+                </form>
+                <Button id="generateSummaryButton" onClick={handleGenerateSummary} style={{ marginTop: '20px' }}>Generate Summary</Button>
+                {summary && (
+                  <Card style={{ marginTop: '20px', backgroundColor: '#fffbe6' }}>
+                    <Typography.Text strong>Summary:</Typography.Text>
+                    <p>{summary}</p>
                   </Card>
-                  {msg.sender === 'user' && <Avatar icon={<UserOutlined />} style={{ marginLeft: '10px' }} />}
-                </List.Item>
-              )}
-            />
-            <form id="chat-form" onSubmit={handleSubmit} style={{ display: 'flex', marginTop: '20px' }}>
-              <TextArea
-                rows={2}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message here..."
-                required
-                style={{ flex: 1, marginRight: '10px' }}
-              />
-              <Button type="primary" htmlType="submit">Send</Button>
-            </form>
-          </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </Content>
-    </Layout>
+    </div>
   );
 };
 
