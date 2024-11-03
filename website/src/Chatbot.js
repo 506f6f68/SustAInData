@@ -224,7 +224,7 @@ const ChatbotPage = () => {
                 {summary && (
                   <Card style={{ marginTop: '20px', backgroundColor: '#fffbe6' }}>
                     <Typography.Text strong>Summary:</Typography.Text>
-                    <p>{summary}</p>
+                    <p> <ReactMarkdown>{summary}</ReactMarkdown></p>
                   </Card>
                 )}
                 {showDashboard && dashboardData.map((plan, index) => (
