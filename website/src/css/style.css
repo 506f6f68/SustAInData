@@ -278,11 +278,12 @@ a:focus {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 15px;
-  color: #ffffff;
+  color: #000000;
+  text-align: left;
 }
 
 .slider_section .detail-box p {
-  color: #fefefe;
+  color: #292525;
   font-size: 20px;
 }
 
@@ -967,60 +968,27 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    text-align: center;
-    color: #00204a;
+
+.chatbot_section {
+    padding: 50px 0;
 }
 
-form {
+#chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#chat-form {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-input[type="text"] {
+#chat-form textarea {
     flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     margin-right: 10px;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #00bbf0;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #007fa4;
-}
-
-#chat-output {
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    min-height: 100px;
-    margin-bottom: 20px;
-}
-
-.message {
-    margin: 10px 0;
-}
-
-.message.user {
-    text-align: right;
-}
-
-.message.bot {
-    text-align: left;
-}
-
-.navbar-brand-text {
-    color: #000000; /* Make the text black */
+#chat-form button {
+    flex-shrink: 0;
 }

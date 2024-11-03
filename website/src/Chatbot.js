@@ -1,8 +1,14 @@
 // ChatbotPage.js
 import React, { useState } from 'react';
+import { Layout, Input, Button, List, Typography, Card, Avatar } from 'antd';
+import { UserOutlined, RobotOutlined } from '@ant-design/icons';
 import './css/bootstrap.css';
 import './css/style.css';
 import './css/responsive.css';
+
+const { Header, Content } = Layout;
+const { TextArea } = Input;
+const { Title } = Typography;
 
 const ChatbotPage = () => {
   const [messages, setMessages] = useState([]);
@@ -30,8 +36,8 @@ const ChatbotPage = () => {
   };
 
   return (
-    <div className="chatbot_page">
-      <header className="header_section">
+    <Layout className="chatbot_page">
+      <Header className="header_section">
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg custom_nav-container">
             <a className="navbar-brand" href="/">
@@ -48,43 +54,43 @@ const ChatbotPage = () => {
                 <li className="nav-item active">
                   <a className="nav-link blue-text" href="/chatbot">Chatbot <span className="sr-only">(current)</span></a>
                 </li>
-                <form className="form-inline">
-                  <button className="btn my-2 my-sm-0 nav_search-btn" type="submit">
-                    <i className="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                </form>
               </ul>
             </div>
           </nav>
         </div>
-      </header>
+      </Header>
 
-      <section className="chatbot_section">
+      <Content className="chatbot_section">
         <div className="container">
-          <h2>Chat with our Data Center Consultant</h2>
+          <Title level={2} style={{ textAlign: 'center' }}>Chat with our Data Center Consultant</Title>
           <div id="chat-container" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-            <div id="chat-output">
-              {messages.map((msg, index) => (
-                <div key={index} className={`message ${msg.sender}`}>
-                  <span>{msg.text}</span>
-                </div>
-              ))}
-            </div>
-            <form id="chat-form" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                id="user-input"
+            <List
+              dataSource={messages}
+              renderItem={(msg, index) => (
+                <List.Item key={index} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
+                  {msg.sender === 'bot' && <Avatar icon={<RobotOutlined />} style={{ marginRight: '10px' }} />}
+                  <Card style={{ width: '100%', backgroundColor: msg.sender === 'user' ? '#e6f7ff' : '#f6ffed' }}>
+                    <Typography.Text>{msg.text}</Typography.Text>
+                  </Card>
+                  {msg.sender === 'user' && <Avatar icon={<UserOutlined />} style={{ marginLeft: '10px' }} />}
+                </List.Item>
+              )}
+            />
+            <form id="chat-form" onSubmit={handleSubmit} style={{ display: 'flex', marginTop: '20px' }}>
+              <TextArea
+                rows={2}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message here..."
                 required
+                style={{ flex: 1, marginRight: '10px' }}
               />
-              <button type="submit">Send</button>
+              <Button type="primary" htmlType="submit">Send</Button>
             </form>
           </div>
         </div>
-      </section>
-    </div>
+      </Content>
+    </Layout>
   );
 };
 

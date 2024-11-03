@@ -1,9 +1,9 @@
 $white: #ffffff;
 $black: #000000;
-// $primary1: #0cb1a8;
 $primary1: #00bbf0;
 $primary2: #00204a;
 $textCol: #1f1f1f;
+$teamBg: #8cd8bc; // New variable for team container background color
 
 // import fonts - font-family: 'Open Sans', sans-serif;
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap");
@@ -150,6 +150,7 @@ a:focus {
 
 .header_section {
   padding: 15px 0;
+  background-color: rgba($white, 0.5); // Update this line
 
   .container-fluid {
     padding-right: 25px;
@@ -381,9 +382,7 @@ a:focus {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 45px;
     background-color: #f8f8f9;
-    padding: 20px;
     border-radius: 5px;
 
     .img-box {
@@ -408,7 +407,9 @@ a:focus {
         text-transform: uppercase;
       }
 
-      p {}
+      p {
+        text-align: justify;
+      }
 
       a {
         color: $primary2;
@@ -437,7 +438,7 @@ a:focus {
 
 // about section
 .about_section {
-  background-color: $primary2;
+  background-color: $teamBg; // Update this line
   color: $white;
 
   .heading_container {
@@ -529,7 +530,7 @@ a:focus {
 
 .team_section {
   text-align: center;
-  background-color: $primary2;
+  background-color: $teamBg; // Update this line
   color: $white;
 
   .heading_container {
@@ -545,8 +546,7 @@ a:focus {
       overflow: hidden;
       transition: all .1s;
       margin-top: 45px;
-      // background-color: #053068;
-      background: linear-gradient(to bottom, lighten($color: $primary2, $amount: 3), lighten($color: $primary2, $amount: 5));
+      background: linear-gradient(to bottom, lighten($color: $teamBg, $amount: 3), lighten($color: $teamBg, $amount: 5)); // Update this line
 
       .img-box {
         display: flex;
@@ -796,3 +796,13 @@ a:focus {
 }
 
 // end footer section
+
+.blue-text {
+  color: $primary1;
+}
+
+.service_section .detail-box p,
+.about_section .detail-box p,
+.why_section .detail-box p {
+  text-align: justify;
+}
