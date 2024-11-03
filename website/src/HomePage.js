@@ -38,6 +38,9 @@ function HomePage() {
                 <li className="nav-item">
                   <a className="nav-link blue-text" href="/chatbot">Chatbot</a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link blue-text" href="/marketplace">MarketPlace</a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -52,7 +55,7 @@ function HomePage() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="detail-box">
-                      <h1>Data Center <br />Consulting</h1>
+                      <h1>Powering the <br /> sustainable future of AI</h1>
                       <p>Our chatbot provides expert advice on building and managing data centers, ensuring efficiency and reliability. Get personalized recommendations and support for your data center projects.</p>
                       <div className="btn-box">
                         <a href="/chatbot" className="btn1">Let's Chat!</a>
@@ -87,19 +90,8 @@ function HomePage() {
                     <img src="images/survey.png" alt="" />
                   </div>
                   <div className="detail-box">
-                    <h5>Strategic Site Selection and ESG Compliance</h5>
-                    <p>Selecting the right location is pivotal to minimizing environmental impact and optimizing costs. We leverage advanced analytics to identify sites that align with your sustainability goals, maximizing access to renewable energy sources while meeting local regulatory requirements. Our thorough environmental assessments also ensure a low-impact footprint from day one.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="box">
-                  <div className="img-box">
-                    <img src="images/speed.png" alt="" />
-                  </div>
-                  <div className="detail-box">
-                    <h5>Modular and Scalable Construction for Rapid Deployment</h5>
-                    <p>Our modular approach not only speeds up deployment but also adapts to fluctuating demand, allowing you to scale operations without overcommitting resources. This approach minimizes upfront costs, reduces construction waste, and allows for flexibility in expanding or upgrading as your needs evolve.</p>
+                    <h5>Strategic Site Selection</h5>
+                    <p>Identify sites that align with your sustainability goals, maximizing access to renewable energy sources while meeting local regulatory requirements.</p>
                   </div>
                 </div>
               </div>
@@ -109,8 +101,8 @@ function HomePage() {
                     <img src="images/s3.png" alt="" />
                   </div>
                   <div className="detail-box">
-                    <h5>Operational Optimization Through Real-Time Monitoring and Automation</h5>
-                    <p>Our solutions include real-time monitoring platforms that track and optimize energy consumption, cooling efficiency, and carbon output. With advanced automation and AI-driven insights, our tools enable proactive adjustments that reduce energy use, maximize uptime, and support real-time carbon tracking.</p>
+                    <h5>Operational Optimization</h5>
+                    <p>With supplier datasets and AI-driven insights, our tool create solutions which optimize energy consumption, cooling efficiency, and carbon output.</p>
                   </div>
                 </div>
               </div>
@@ -120,8 +112,19 @@ function HomePage() {
                     <img src="images/carbon-neutral.png" alt="" />
                   </div>
                   <div className="detail-box">
-                    <h5>Carbon Footprint Management and Compliance Tracking</h5>
-                    <p>Stay ahead in sustainability commitments with comprehensive carbon management solutions. Our carbon tracking and reporting tools are designed to simplify your journey to net-zero, offering a clear view of emissions reductions and compliance with evolving global standards.</p>
+                    <h5>Carbon Footprint Management</h5>
+                    <p>Stay ahead in sustainability commitments with comprehensive carbon management solutions.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="box">
+                  <div className="img-box">
+                    <img src="images/speed.png" alt="" />
+                  </div>
+                  <div className="detail-box">
+                    <h5>Instant <br/> Suppliers List</h5>
+                    <p>Get a comprehensive list of potential suppliers tailored to your project needs. Quickly evaluate different solutions through our dashboard. </p>
                   </div>
                 </div>
               </div>
@@ -135,18 +138,19 @@ function HomePage() {
         <div className="container">
           <div className="heading_container heading_center">
             <h2>About <span>Us</span></h2>
-            <p>We are a team of experts dedicated to providing top-notch consulting services for data center projects.</p>
+            <p>Passionate about data and sustainability, we are dedicated to providing top-notch consulting services for data center products supporting a greener future
+            </p>
           </div>
           <div className="row">
             <div className="col-md-6">
               <div className="img-box">
-                <img src="images/about-img.png" alt="" />
+                <img src="images/cms-14.jpg.png" alt="" />
               </div>
             </div>
             <div className="col-md-6">
               <div className="detail-box">
                 <h3>We Are sustAIn data</h3>
-                <p>With years of experience in the industry, we offer comprehensive consulting services to help you build and manage your data center effectively. Our chatbot is designed to provide you with the best advice and support, tailored to your specific needs.</p>
+                <p>With a deep background in Climate & Sustainability Engineering, we offer comprehensive consulting services that help you build and manage your data center effectively while addressing the existential threat of climate change. Our chatbot is designed to provide you with the best advice and support, tailored to your specific needs.</p>
               </div>
             </div>
           </div>
@@ -174,17 +178,8 @@ function HomePage() {
                 <img src="images/w2.png" alt="" />
               </div>
               <div className="detail-box">
-                <h5>Speed and Flexibility with Modular Scalability</h5>
-                <p>Our modular approach allows you to scale capacity incrementally, so you’re never overextended or under-resourced. This flexibility prevents both overbuilding and bottlenecks in response to fluctuating demand.</p>
-              </div>
-            </div>
-            <div className="box">
-              <div className="img-box">
-                <img src="images/w3.png" alt="" />
-              </div>
-              <div className="detail-box">
-                <h5>Advanced Monitoring for Data-Driven Decision Making</h5>
-                <p>Real-time data and automated optimizations ensure high-efficiency operations. By offering proactive recommendations and adjustments, we help you address inefficiencies before they become cost and energy burdens.</p>
+                <h5>Speed and Flexibility with MarketPlace </h5>
+                <p>Our marketplace matches you with the retailers you need to implement actionable solutions, streamlining your research process. </p>
               </div>
             </div>
             <div className="box">
@@ -198,7 +193,7 @@ function HomePage() {
             </div>
             <div className="box">
               <div className="img-box">
-                <img src="images/w5.png" alt="" />
+                <img src="images/w3.png" alt="" />
               </div>
               <div className="detail-box">
                 <h5>Tailored Strategies Aligned with Your Growth and ESG Goals</h5>

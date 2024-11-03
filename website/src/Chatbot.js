@@ -134,6 +134,9 @@ const ChatbotPage = () => {
                 <li className="nav-item active">
                   <a className="nav-link blue-text" href="/chatbot">Chatbot <span className="sr-only">(current)</span></a>
                 </li>
+                <li className="nav-item">
+                  <a className="nav-link blue-text" href="/marketplace">MarketPlace</a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -222,9 +225,6 @@ const ChatbotPage = () => {
                   </Card>
                 )}
               </div>
-              {showDashboard && dashboardData.map((plan, index) => (
-                <Dashboards key={index} {...plan} />
-              ))} {/* Render multiple dashboards */}
             </>
           )}
         </div>
