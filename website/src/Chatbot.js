@@ -1,12 +1,12 @@
 // ChatbotPage.js
 import React, { useState } from 'react';
 import { Layout, Input, Button, List, Typography, Card, Avatar, Spin, Form, Select, InputNumber } from 'antd';
-import { UserOutlined, RobotOutlined, LoadingOutlined } from '@ant-design/icons';
+import { UserOutlined} from '@ant-design/icons';
 import ReactMarkdown from 'react-markdown';
 import './css/bootstrap.css';
 import './css/style.css';
 import './css/responsive.css';
-//import Dashboards from './Dashboards'; // Import the Dashboards component
+import Dashboards from './Dashboards'; // Import the Dashboards component
 
 const { Header, Content } = Layout;
 const { TextArea } = Input;
@@ -79,6 +79,10 @@ const ChatbotPage = () => {
     }
   };
 
+  const windTurbineIcon = (
+    <img src="images/fan.png" alt="Loading" style={{ width: 25, height: 25 }} className="spin" />
+  );
+
   return (
     <div className="chatbot_page">
       <header className="header_section">
@@ -150,7 +154,7 @@ const ChatbotPage = () => {
                   dataSource={messages}
                   renderItem={(msg, index) => (
                     <List.Item key={index} style={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
-                      {msg.sender === 'bot' && <Avatar icon={<RobotOutlined />} style={{ marginRight: '10px' }} />}
+                      {msg.sender === 'bot' && <Avatar src="images/llama.png" style={{ marginRight: '10px' }} />}
                       <Card style={{ width: '100%', backgroundColor: msg.sender === 'user' ? '#e6f7ff' : '#f6ffed' }}>
                         <Typography.Text>
                           <ReactMarkdown>{msg.text}</ReactMarkdown>
@@ -161,8 +165,10 @@ const ChatbotPage = () => {
                   )}
                 />
                 {loading && (
-                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', fontSize: "20px"}}>
+                    <p>L</p>
+                    <Spin indicator={windTurbineIcon} />
+                    <p>ADING ...</p>
                   </div>
                 )}
                 <form id="chat-form" onSubmit={handleSubmit} style={{ display: 'flex', marginTop: '20px' }}>
