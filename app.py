@@ -84,12 +84,12 @@ def get_parsing_summary_prompt():
     return (
         "You are an expert extraction algorithm."
         "Only extract relevant information from the text. "
-        "If you do not know the value of an attribute asked to extract, return an estimate based on the information provided.",
+        "If you do not know the value of an attribute asked to extract, return an estimate based on the information provided."
         "Below are some formulas to help you extract the information:"
         "how to calculate renewablePercentage: "
         "<if all using grid, the renewablePercentage is 40%>."
         "<if all using off-grid, the renewablePercentage is 100%>."
-        "<if using mix, the renewablePercentage is 0.4*(Percentage of gird) + 1*(1-Percentage of gird)>."
+        "<if using mix, first choose the Percentage of gird (X), then renewablePercentage is 0.4*X + (1-X)>."
         "how to calculate the cost of grid energy in different area: "
         "<in Sacramento/Central Valley, the cost is $0.16/kWh>."
         "<in Bay Area, the cost is $0.403/kWh>."
@@ -101,7 +101,7 @@ def get_parsing_summary_prompt():
         "<in Bay Area/Central Valley, the emission is 261g CO2eq/kWh>."
         "<in Los Angeles, the emission is 381g CO2eq/kWh>."
         "how to calculate Carbon Emmisions using off-grid energy: "
-        "<in all areas, the emission is 0g CO2eq/kWh>.",
+        "<in all areas, the emission is 0g CO2eq/kWh>."
     )
 
 
@@ -146,7 +146,7 @@ def parse_external_data():
     # vector_store.add_documents(docs)
 
     print(f"starting to parse {len(pdf_paths)} pdfs...")
-    parsed_docs = [parse_pdf(path) for path in pdf_paths[:1]]
+    parsed_docs = [parse_pdf(path) for path in pdf_paths]
     docs = [page for pages in parsed_docs for page in pages]
     print("finished parsing, starting to add to vector store...")
     vector_store.add_documents(docs)
@@ -211,13 +211,15 @@ class summary_schema(BaseModel):
     CarbonEmissions: Optional[str] = Field(default=None, description="The carbon emissions of the data center")
     WaterUsage: Optional[str] = Field(default=None, description="The water usage of the data center")
     RegulatoryCompliance: Optional[str] = Field(default=None, description="The regulatory compliance of the data center")
-    
+
+
 class Plan(BaseModel):
     """Extracted data about people."""
 
     # Creates a model so that we can extract multiple entities.
     plan: List[summary_schema]
-    
+
+
 @fastapi.post("/process_text/")
 async def process_text(input_data: dict):
     tier = input_data["tier"]
@@ -246,13 +248,13 @@ async def get_summary():
     combined_context = (Document(page_content=combined_context, metadata={"title": "chat_history"}),)
     summary = summary_chain.invoke({"context": combined_context})
     print(summary)
-    ## dashboard
-    # summary_extract_prompt = ChatPromptTemplate.from_messages([("system", get_parsing_summary_prompt()), ("human", "{text}")])
-    # summary_extractor = ChatMistralAI(model="mistral-large-latest", temperature=0)
-    # runnable = summary_extract_prompt | summary_extractor.with_structured_output(schema=Plan)
-    # res = runnable.invoke({"text": summary})
-    # print(res)
-    return JSONResponse(content={"summary": summary})
+    # dashboard
+    summary_extract_prompt = ChatPromptTemplate.from_messages([("system", get_parsing_summary_prompt()), ("human", "{text}")])
+    summary_extractor = ChatMistralAI(model="mistral-large-latest", temperature=0, api_key=os.getenv("MISTRAL_API_KEY"))
+    runnable = summary_extract_prompt | summary_extractor.with_structured_output(schema=Plan)
+    res = runnable.invoke({"text": summary})
+    print(res.model_dump())
+    return JSONResponse(content={"summary": summary, "extracted": res.model_dump()['plan']})
 
 
 if __name__ == "__main__":
