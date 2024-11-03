@@ -77,10 +77,32 @@ const ChatbotPage = () => {
       // Update summary state
       setSummary(summaryData.summary);
 
-      // Parse the dashboard response
+      // Map the summaryData.plans to the format required by Dashboards component
+      const mappedDashboardData = summaryData.plans.map(plan => ({
+        planTitle: plan.Location,
+        locationDetails: plan.Location,
+        coolingTech: {
+          building: { techName: plan.CoolingTech_air_name, supplier: plan.CoolingTech_air_supplier },
+          server: { techName: plan.CoolingTech_server_name, supplier: plan.CoolingTech_server_supplier }
+        },
+        energyDetails: {
+          type: plan.Energy_Choice,
+          supplier: plan.Energy_Choice,
+          renewablePercentage: parseInt(plan.RenewablePercentage)
+        },
+        operationalCost: {
+          total: parseInt(plan.OperatingCost.replace(/[^0-9]/g, '')),
+          utility: parseInt(plan.GridEnergyCost.replace(/[^0-9]/g, '')),
+          rent: 0, // Assuming rent is not provided
+          staff: 0 // Assuming staff cost is not provided
+        },
+        emissions: parseInt(plan.CarbonEmissions.replace(/[^0-9]/g, '')),
+        waterUsage: parseInt(plan.WaterUsage.replace(/[^0-9]/g, '')),
+        regulations: plan.RegulatoryCompliance
+      }));
 
       // Update dashboard data state
-      setDashboardData(summaryData.plans); // Assuming the API returns an object with a 'plans' array
+      setDashboardData(mappedDashboardData);
       setShowDashboard(true); // Show the dashboard after generating summary
     } catch (error) {
       console.error("Error generating summary or fetching dashboard data:", error);
